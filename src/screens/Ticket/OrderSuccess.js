@@ -202,7 +202,6 @@ const mapStateToprops = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    fetchConcessions: () => dispatch(actions.fetchConcessions()),
     clearCartItems: () => dispatch(actions.clearCartItems())
   };
 };

@@ -68,37 +68,19 @@ export const replaceCheckoutItems = data => {
     checkout: data
   };
 };
-export const fetchConcessions = () => {
+export const fetchShopItems = params => {
+  //params can be 'concession' or 'merchandise'
   return dispatch => {
-    // dispatch(LoaderStart());
-
     axios
       .get(
         constant.baseUrl +
-          `/concessions?$limit=${12}&productType=concession&$order=id`
+          `/concessions?$limit=${12}&productType=${params}&$order=id`
       )
       .then(response => {
         console.log(response.data.data);
-        dispatch(saveConcessions(response.data.data));
-      })
-      .catch(err => {
-        console.log(err);
-        console.log(err.response.data);
-      });
-  };
-};
-export const fetchMerchandise = () => {
-  return dispatch => {
-    // dispatch(LoaderStart());
-
-    axios
-      .get(
-        constant.baseUrl +
-          `/concessions?$limit=${12}&productType=merchandise&$order=id`
-      )
-      .then(response => {
-        console.log(response.data.data);
-        dispatch(saveMerchandise(response.data.data));
+        params == "merchandise"
+          ? dispatch(saveMerchandise(response.data.data))
+          : dispatch(saveConcessions(response.data.data));
       })
       .catch(err => {
         console.log(err);

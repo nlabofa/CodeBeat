@@ -85,8 +85,8 @@ class ShopHome extends Component {
   };
   componentDidMount() {
     //StatusBar.setHidden(true);
-    this.props.fetchConcessions();
-    this.props.fetchMerchandise();
+    this.props.fetchShopItems("merchandise");
+    this.props.fetchShopItems("concession");
   }
   setModalVal = val => {
     this.setState({ dropdownval: val });
@@ -532,8 +532,7 @@ const mapStateToprops = state => {
 const mapDispatchToProps = dispatch => {
   return {
     clearCartItems: () => dispatch(actions.clearCartItems()),
-    fetchConcessions: () => dispatch(actions.fetchConcessions()),
-    fetchMerchandise: () => dispatch(actions.fetchMerchandise()),
+    fetchShopItems: params => dispatch(actions.fetchShopItems(params)),
     addItemToCart: data => dispatch(actions.addItemToCart(data)),
     replaceItemInCart: data => dispatch(actions.replaceItemInCart(data)),
     updatePrice: () => dispatch(actions.updatePrice())

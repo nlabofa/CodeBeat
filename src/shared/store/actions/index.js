@@ -12,13 +12,12 @@ export {
 } from "./FilmAction";
 
 export {
-  fetchConcessions,
   addItemToCart,
   replaceItemInCart,
   clearCartItems,
   totalPrice,
   updatePrice,
-  fetchMerchandise,
+  fetchShopItems,
   createCart
 } from "./ShopAction";
 
