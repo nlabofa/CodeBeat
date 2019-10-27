@@ -1,0 +1,6 @@
+{
+  "files.autoSave": "onWindowChange",
+  "java.configuration.updateBuildConfiguration": "disabled"
+  // "files.autoSave": "afterDelay",
+  // "files.autoSaveDelay": 4000
+}

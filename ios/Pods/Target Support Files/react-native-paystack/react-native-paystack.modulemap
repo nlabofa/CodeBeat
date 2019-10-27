@@ -1,0 +1,6 @@
+framework module react_native_paystack {
+  umbrella header "react-native-paystack-umbrella.h"
+
+  export *
+  module * { export * }
+}
