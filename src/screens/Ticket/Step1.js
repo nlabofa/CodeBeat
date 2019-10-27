@@ -262,10 +262,131 @@ class Step1 extends Component {
       </View>
     );
   };
-  renderBody = () => {
-    const { width } = Dimensions.get("window");
+  shadowContent = () => {
     const { ticketList, shadowContent } = this.state;
-    const { ticket_type, totalticketprice } = this.props;
+    return (
+      <View style={{ marginTop: RFValue(10) }}>
+        <View>
+          <CustomInput
+            label="NAME"
+            placeholder=""
+            value={this.state["0guestname"]}
+            maxLength={70}
+            onChangeText={value => this.setState({ "0guestname": value })}
+          />
+          <CustomInput
+            keyboardType="email-address"
+            label="EMAIL"
+            placeholder=""
+            value={this.state["0guestemail"]}
+            valid={validate(this.state["0guestemail"], "emailValidator")}
+            onChangeText={value => this.setState({ "0guestemail": value })}
+          />
+        </View>
+        {shadowContent &&
+        shadowContent.quantity > 1 &&
+        ticketList.length == 1 ? (
+          <View style={styles.guestview}>
+            <CheckBox
+              checkedColor="#60CED1"
+              uncheckedColor="#fff"
+              checkedIcon="check-box"
+              iconType="material-Icons"
+              uncheckedIcon="check-box-outline-blank"
+              containerStyle={{
+                marginRight: 0
+              }}
+              checked={this.state.guestchecked === true}
+              onPress={() =>
+                this.setState({
+                  guestchecked: !this.state.guestchecked
+                })
+              }
+            />
+            <Text style={[styles.adtext2]}>Send Ticket to Guest(s)</Text>
+          </View>
+        ) : null}
+      </View>
+    );
+  };
+  multiGuest = () => {
+    const { shadowContent } = this.state;
+    return [...Array(shadowContent.quantity - 1)].map((e, i) => (
+      <View key={i}>
+        <View style={styles.guestline}>
+          <Image
+            source={require("../../assets/image/guestinfoline.png")}
+            style={{ width: "100%", height: RFValue(30) }}
+            resizeMode="contain"
+          />
+        </View>
+        <View>
+          <CustomInput
+            label="NAME"
+            placeholder="Opeyemi Adeyemi"
+            value={this.state[i + 1 + "guestname"]}
+            onChangeText={value =>
+              this.setState({ [i + 1 + "guestname"]: value })
+            }
+          />
+          <CustomInput
+            keyboardType="email-address"
+            label="EMAIL"
+            placeholder="email@yahoo.com"
+            value={this.state[i + 1 + "guestemail"]}
+            onChangeText={value =>
+              this.setState({ [i + 1 + "guestemail"]: value })
+            }
+          />
+        </View>
+      </View>
+    ));
+  };
+  renderBase = () => {
+    const { width } = Dimensions.get("window");
+    const { ticket_type } = this.props;
+    return (
+      <View style={{ marginTop: RFValue(15) }}>
+        <Carousel
+          ref={c => (this._slider2Ref = c)}
+          data={ticket_type && ticket_type}
+          renderItem={this._renderItem2}
+          sliderWidth={width}
+          itemWidth={RFValue(243)}
+          activeSlideAlignment="start"
+          inactiveSlideOpacity={0.5}
+          removeClippedSubviews={false}
+          //activeSlideAlignment="start"
+          inactiveSlideScale={3}
+          //firstItem={1}
+          onSnapToItem={index => this.setState({ slider2ActiveSlide: index })}
+          contentContainerCustomStyle={
+            {
+              //overflow: 'hidden',
+              // width: 140 * 2.2,
+            }
+          }
+        />
+        <Pagination
+          ref={c => (this._slider2Ref = c)}
+          dotsLength={ticket_type && ticket_type.length}
+          activeDotIndex={this.state.slider2ActiveSlide}
+          containerStyle={styles.paginationContainer}
+          dotColor={"rgba(255, 255, 255, 0.92)"}
+          dotStyle={styles.paginationDot}
+          inactiveDotColor={"#282a3b"}
+          inactiveDotStyle={styles.inactivedot}
+          //inactiveDotOpacity={0.4}
+          inactiveDotScale={1.2}
+          carouselRef={this._slider2Ref}
+          //tappableDots={true}
+        />
+      </View>
+    );
+  };
+  renderBody = () => {
+    const { ticketList, shadowContent } = this.state;
+    const { totalticketprice } = this.props;
     return (
       <KeyboardAwareScrollView
         enableOnAndroid
@@ -295,130 +416,12 @@ class Step1 extends Component {
                   style={{ width: "100%" }}
                 />
               </View>
-              <View style={{ marginTop: RFValue(15) }}>
-                <Carousel
-                  ref={c => (this._slider2Ref = c)}
-                  data={ticket_type && ticket_type}
-                  renderItem={this._renderItem2}
-                  sliderWidth={width}
-                  itemWidth={RFValue(243)}
-                  activeSlideAlignment="start"
-                  inactiveSlideOpacity={0.5}
-                  removeClippedSubviews={false}
-                  //activeSlideAlignment="start"
-                  inactiveSlideScale={3}
-                  //firstItem={1}
-                  onSnapToItem={index =>
-                    this.setState({ slider2ActiveSlide: index })
-                  }
-                  contentContainerCustomStyle={
-                    {
-                      //overflow: 'hidden',
-                      // width: 140 * 2.2,
-                    }
-                  }
-                />
-                <Pagination
-                  ref={c => (this._slider2Ref = c)}
-                  dotsLength={ticket_type && ticket_type.length}
-                  activeDotIndex={this.state.slider2ActiveSlide}
-                  containerStyle={styles.paginationContainer}
-                  dotColor={"rgba(255, 255, 255, 0.92)"}
-                  dotStyle={styles.paginationDot}
-                  inactiveDotColor={"#282a3b"}
-                  inactiveDotStyle={styles.inactivedot}
-                  //inactiveDotOpacity={0.4}
-                  inactiveDotScale={1.2}
-                  carouselRef={this._slider2Ref}
-                  //tappableDots={true}
-                />
-              </View>
-              {shadowContent ? (
-                <View style={{ marginTop: RFValue(10) }}>
-                  <View>
-                    <CustomInput
-                      label="NAME"
-                      placeholder=""
-                      value={this.state["0guestname"]}
-                      maxLength={70}
-                      onChangeText={value =>
-                        this.setState({ "0guestname": value })
-                      }
-                    />
-                    <CustomInput
-                      keyboardType="email-address"
-                      label="EMAIL"
-                      placeholder=""
-                      value={this.state["0guestemail"]}
-                      valid={validate(
-                        this.state["0guestemail"],
-                        "emailValidator"
-                      )}
-                      onChangeText={value =>
-                        this.setState({ "0guestemail": value })
-                      }
-                    />
-                  </View>
-                  {shadowContent &&
-                  shadowContent.quantity > 1 &&
-                  ticketList.length == 1 ? (
-                    <View style={styles.guestview}>
-                      <CheckBox
-                        checkedColor="#60CED1"
-                        uncheckedColor="#fff"
-                        checkedIcon="check-box"
-                        iconType="material-Icons"
-                        uncheckedIcon="check-box-outline-blank"
-                        containerStyle={{
-                          marginRight: 0
-                        }}
-                        checked={this.state.guestchecked === true}
-                        onPress={() =>
-                          this.setState({
-                            guestchecked: !this.state.guestchecked
-                          })
-                        }
-                      />
-                      <Text style={[styles.adtext2]}>
-                        Send Ticket to Guest(s)
-                      </Text>
-                    </View>
-                  ) : null}
-                </View>
-              ) : null}
+              {this.renderBase()}
+              {shadowContent ? this.shadowContent() : null}
               {this.state.guestchecked === true &&
               shadowContent.quantity > 1 &&
               ticketList.length == 1
-                ? [...Array(shadowContent.quantity - 1)].map((e, i) => (
-                    <View key={i}>
-                      <View style={styles.guestline}>
-                        <Image
-                          source={require("../../assets/image/guestinfoline.png")}
-                          style={{ width: "100%", height: RFValue(30) }}
-                          resizeMode="contain"
-                        />
-                      </View>
-                      <View>
-                        <CustomInput
-                          label="NAME"
-                          placeholder="Opeyemi Adeyemi"
-                          value={this.state[i + 1 + "guestname"]}
-                          onChangeText={value =>
-                            this.setState({ [i + 1 + "guestname"]: value })
-                          }
-                        />
-                        <CustomInput
-                          keyboardType="email-address"
-                          label="EMAIL"
-                          placeholder="email@yahoo.com"
-                          value={this.state[i + 1 + "guestemail"]}
-                          onChangeText={value =>
-                            this.setState({ [i + 1 + "guestemail"]: value })
-                          }
-                        />
-                      </View>
-                    </View>
-                  ))
+                ? this.multiGuest()
                 : null}
               <Button
                 formIsValid={

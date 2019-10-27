@@ -111,73 +111,78 @@ class OrderSummary extends Component {
       this.props.updatePrice();
     }
   };
+  itemList = () => {
+    const { checkout, totalpriceval } = this.props;
+    return (
+      <View style={{ marginHorizontal: RFValue(20) }}>
+        {checkout &&
+          checkout.map((value, index) => (
+            <View key={index}>
+              <View style={{ marginHorizontal: RFValue(-20) }}>
+                <Image
+                  source={require("../../assets/image/icon/line.png")}
+                  style={{ width: "100%", height: 1 }}
+                />
+              </View>
+              <View style={styles.summarydiv}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <TouchableOpacity
+                    style={{ marginRight: RFValue(10) }}
+                    hitSlop={BaseTheme.hitSlop}
+                    onPress={() => this.removeItem(value)}
+                  >
+                    <Ionicons name="ios-trash" color="#fff" size={25} />
+                  </TouchableOpacity>
+
+                  <Text style={[styles.adtext7L]}>{value.name}</Text>
+                  <View style={styles.carticon}>
+                    <Text style={[styles.adtext7Li]}>
+                      {"x" + value.quantity}
+                    </Text>
+                  </View>
+                </View>
+                <Text style={[styles.adtext7R]}>
+                  {" "}
+                  {"\u20A6"}
+                  {this.formatAmount(value.price * value.quantity)}
+                </Text>
+              </View>
+            </View>
+          ))}
+
+        <View style={{ marginHorizontal: RFValue(-20) }}>
+          <Image
+            source={require("../../assets/image/dashedline.png")}
+            style={{ width: "100%", height: 1 }}
+          />
+        </View>
+        <View style={styles.summarydiv}>
+          <Text style={[styles.adtext7L, { color: Colors.basewhite }]}>
+            TOTAL
+          </Text>
+          <Text
+            style={[
+              styles.adtext7R,
+              { color: Colors.basewhite, fontSize: RFValue(16) }
+            ]}
+          >
+            {" "}
+            {"\u20A6"}
+            {this.formatAmount(totalpriceval)}
+          </Text>
+        </View>
+      </View>
+    );
+  };
   renderBody = () => {
-    const { checkout, totalpriceval, loading } = this.props;
+    const { totalpriceval, loading } = this.props;
     return (
       <KeyboardAwareScrollView
         enableOnAndroid
         extraHeight={Platform.OS === "android" ? 20 : null}
         extraScrollHeight={Platform.OS === "ios" ? 20 : null}
       >
-        <View style={{ marginHorizontal: RFValue(20) }}>
-          {checkout &&
-            checkout.map((value, index) => (
-              <View key={index}>
-                <View style={{ marginHorizontal: RFValue(-20) }}>
-                  <Image
-                    source={require("../../assets/image/icon/line.png")}
-                    style={{ width: "100%", height: 1 }}
-                  />
-                </View>
-                <View style={styles.summarydiv}>
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <TouchableOpacity
-                      style={{ marginRight: RFValue(10) }}
-                      hitSlop={BaseTheme.hitSlop}
-                      onPress={() => this.removeItem(value)}
-                    >
-                      <Ionicons name="ios-trash" color="#fff" size={25} />
-                    </TouchableOpacity>
-
-                    <Text style={[styles.adtext7L]}>{value.name}</Text>
-                    <View style={styles.carticon}>
-                      <Text style={[styles.adtext7Li]}>
-                        {"x" + value.quantity}
-                      </Text>
-                    </View>
-                  </View>
-                  <Text style={[styles.adtext7R]}>
-                    {" "}
-                    {"\u20A6"}
-                    {this.formatAmount(value.price * value.quantity)}
-                  </Text>
-                </View>
-              </View>
-            ))}
-
-          <View style={{ marginHorizontal: RFValue(-20) }}>
-            <Image
-              source={require("../../assets/image/dashedline.png")}
-              style={{ width: "100%", height: 1 }}
-            />
-          </View>
-          <View style={styles.summarydiv}>
-            <Text style={[styles.adtext7L, { color: Colors.basewhite }]}>
-              TOTAL
-            </Text>
-            <Text
-              style={[
-                styles.adtext7R,
-                { color: Colors.basewhite, fontSize: RFValue(16) }
-              ]}
-            >
-              {" "}
-              {"\u20A6"}
-              {this.formatAmount(totalpriceval)}
-            </Text>
-          </View>
-        </View>
-
+        {this.itemList()}
         <View style={styles.voucherinput2}>
           <View style={{ width: "65%" }}>
             <CustomInput

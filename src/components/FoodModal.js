@@ -120,82 +120,81 @@ class FoodModal extends PureComponent {
       </ScrollView>
     </View>
   );
+  colorItem = () => (
+    <View style={{ marginTop: RFValue(30) }}>
+      <Text style={ticketStyle.modaltext2}>COLOR</Text>
+
+      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+        <View style={ticketStyle.foodmodal}>
+          <Text
+            onPress={() => this.props.setColorVal("red")}
+            numberOfLines={1}
+            style={[
+              ticketStyle.modalhead2,
+              {
+                color: this.props.color === "red" ? "#d3d3d3" : "#31313c"
+              }
+            ]}
+          >
+            Red
+          </Text>
+          {this.props.color === "red" ? <View style={BaseTheme.dot2} /> : null}
+        </View>
+        <View style={ticketStyle.foodmodal}>
+          <Text
+            onPress={() => this.props.setColorVal("white")}
+            numberOfLines={1}
+            style={[
+              ticketStyle.modalhead2,
+              {
+                color: this.props.color === "white" ? "#d3d3d3" : "#31313c"
+              }
+            ]}
+          >
+            White
+          </Text>
+          {this.props.color === "white" ? (
+            <View style={BaseTheme.dot2} />
+          ) : null}
+        </View>
+        <View style={ticketStyle.foodmodal}>
+          <Text
+            onPress={() => this.props.setColorVal("black")}
+            numberOfLines={1}
+            style={[
+              ticketStyle.modalhead2,
+              {
+                color: this.props.color === "black" ? "#d3d3d3" : "#31313c"
+              }
+            ]}
+          >
+            Black
+          </Text>
+          {this.props.color === "black" ? (
+            <View style={BaseTheme.dot2} />
+          ) : null}
+        </View>
+        <View style={ticketStyle.foodmodal}>
+          <Text
+            onPress={() => this.props.setColorVal("blue")}
+            numberOfLines={1}
+            style={[
+              ticketStyle.modalhead2,
+              {
+                color: this.props.color === "blue" ? "#d3d3d3" : "#31313c"
+              }
+            ]}
+          >
+            Blue
+          </Text>
+          {this.props.color === "blue" ? <View style={BaseTheme.dot2} /> : null}
+        </View>
+      </ScrollView>
+    </View>
+  );
   renderColor = () => (
     <View>
-      <View style={{ marginTop: RFValue(30) }}>
-        <Text style={ticketStyle.modaltext2}>COLOR</Text>
-
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <View style={ticketStyle.foodmodal}>
-            <Text
-              onPress={() => this.props.setColorVal("red")}
-              numberOfLines={1}
-              style={[
-                ticketStyle.modalhead2,
-                {
-                  color: this.props.color === "red" ? "#d3d3d3" : "#31313c"
-                }
-              ]}
-            >
-              Red
-            </Text>
-            {this.props.color === "red" ? (
-              <View style={BaseTheme.dot2} />
-            ) : null}
-          </View>
-          <View style={ticketStyle.foodmodal}>
-            <Text
-              onPress={() => this.props.setColorVal("white")}
-              numberOfLines={1}
-              style={[
-                ticketStyle.modalhead2,
-                {
-                  color: this.props.color === "white" ? "#d3d3d3" : "#31313c"
-                }
-              ]}
-            >
-              White
-            </Text>
-            {this.props.color === "white" ? (
-              <View style={BaseTheme.dot2} />
-            ) : null}
-          </View>
-          <View style={ticketStyle.foodmodal}>
-            <Text
-              onPress={() => this.props.setColorVal("black")}
-              numberOfLines={1}
-              style={[
-                ticketStyle.modalhead2,
-                {
-                  color: this.props.color === "black" ? "#d3d3d3" : "#31313c"
-                }
-              ]}
-            >
-              Black
-            </Text>
-            {this.props.color === "black" ? (
-              <View style={BaseTheme.dot2} />
-            ) : null}
-          </View>
-          <View style={ticketStyle.foodmodal}>
-            <Text
-              onPress={() => this.props.setColorVal("blue")}
-              numberOfLines={1}
-              style={[
-                ticketStyle.modalhead2,
-                {
-                  color: this.props.color === "blue" ? "#d3d3d3" : "#31313c"
-                }
-              ]}
-            >
-              Blue
-            </Text>
-            {this.props.color === "blue" ? (
-              <View style={BaseTheme.dot2} />
-            ) : null}
-          </View>
-        </ScrollView>
-      </View>
+      {this.colorItem()}
       <View style={{ marginTop: RFValue(30) }}>
         <Text style={ticketStyle.modaltext2}>CINEMA</Text>
 
